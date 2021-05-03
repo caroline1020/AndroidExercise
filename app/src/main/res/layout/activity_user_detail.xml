@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,57 +11,117 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="@dimen/avatar_size"
             android:id="@+id/avatar"
+            android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/name"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
             android:gravity="center_horizontal"
-            android:text="@{item.name}" />
+            android:text="@{item.name}"
+            app:layout_constraintTop_toBottomOf="@id/avatar" />
 
         <TextView
+            android:id="@+id/bio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
-            android:text="@{item.bio}" />
+            android:text="@{item.bio}"
+            app:layout_constraintTop_toBottomOf="@id/name" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider" />
+            android:layout_margin="20dp"
+            android:background="@color/divider"
+            app:layout_constraintTop_toBottomOf="@id/bio" />
 
-        <TextView
+        <ImageView
+            android:id="@+id/icUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_identity"
-            android:text="@{item.username}" />
+            android:layout_marginTop="40dp"
+            android:padding="20dp"
+            android:src="@drawable/ic_identity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bio" />
 
-        <TextView
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/icUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icUsername"
+            app:layout_constraintTop_toTopOf="@id/icUsername">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.username}"
+                tool:text="username" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_staff_tag"
+                android:text="@string/staff"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="@{item.badgeVisibility()}" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/icLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{item.badgeVisibility()}"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/bg_staff_tag"
-            android:text="@string/staff" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_location"
-            android:text="@{item.location}" />
+            android:padding="20dp"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icUsername" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_link"
-            android:text="@{item.blog}" />
-    </LinearLayout>
+            android:text="@{item.location}"
+            app:layout_constraintBottom_toBottomOf="@id/icLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icLocation"
+            app:layout_constraintTop_toTopOf="@id/icLocation" />
+
+        <ImageView
+            android:id="@+id/icLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:src="@drawable/ic_link"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icLocation" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.blog}"
+            app:layout_constraintBottom_toBottomOf="@id/icLink"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icLink"
+            app:layout_constraintTop_toTopOf="@id/icLink" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

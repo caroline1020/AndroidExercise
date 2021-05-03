@@ -7,5 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="divider">#b1acac</color>
+    <color name="divider">#DFDFDF</color>
+    <color name="bg_staff">#2056D4</color>
+    <color name="ic_color">#6C6C6C</color>
+    <color name="name">#4B5264</color>
 </resources>

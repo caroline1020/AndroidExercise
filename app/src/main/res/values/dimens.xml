@@ -2,5 +2,6 @@
 <resources>
     <dimen name="icon_size">60dp</dimen>
     <dimen name="item_height">100dp</dimen>
-    <dimen name="avatar_size">100dp</dimen>
+    <dimen name="avatar_size">150dp</dimen>
+    <dimen name="ic_size">36dp</dimen>
 </resources>

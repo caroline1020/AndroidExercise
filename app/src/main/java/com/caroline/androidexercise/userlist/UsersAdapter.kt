@@ -3,6 +3,7 @@ package com.caroline.androidexercise.userlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.caroline.androidexercise.databinding.ItemUserBinding
 import com.caroline.androidexercise.network.model.GitHubUser
 
@@ -46,6 +47,10 @@ class ViewHolder private constructor(private val binding: ItemUserBinding) :
         itemView.setOnClickListener { _ ->
             listener.onItemClick(item)
         }
+
+        Glide.with(itemView.context).load(item.avatarUrl)
+            .circleCrop()
+            .into(binding.icon)
     }
 
     companion object {

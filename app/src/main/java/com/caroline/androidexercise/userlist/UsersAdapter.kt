@@ -21,8 +21,12 @@ class UsersAdapter(private val onClickListener: OnItemClickListener) :
         holder.bind(list[position], onClickListener)
     }
 
-    fun setData(newList: ArrayList<GitHubUser>) {
+    fun setData(newList: ArrayList<GitHubUser>?) {
         list.clear()
+        if (newList == null) {
+            notifyDataSetChanged()
+            return
+        }
         list.addAll(newList)
         notifyDataSetChanged()
     }

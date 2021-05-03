@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.caroline.androidexercise.databinding.ActivityMainBinding
+import com.caroline.androidexercise.detail.UserDetailActivity
 import com.caroline.androidexercise.network.model.GitHubUser
 import com.caroline.androidexercise.network.utils.HttpResult
 import com.caroline.androidexercise.userlist.OnItemClickListener
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     val viewModel: UserListViewModel by lazy {
         ViewModelProvider(this).get(UserListViewModel::class.java)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -26,14 +28,14 @@ class MainActivity : AppCompatActivity() {
     private fun registerObservers() {
 
         viewModel.result.observe(this, Observer {
-            when(it){
-                is HttpResult.Success->{
+            when (it) {
+                is HttpResult.Success -> {
                     adapter.setData(it.data)
                 }
-                is HttpResult.Error->{
+                is HttpResult.Error -> {
 
                 }
-                is HttpResult.httpError->{
+                is HttpResult.httpError -> {
 
                 }
             }
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter = UsersAdapter(object : OnItemClickListener {
         override fun onItemClick(item: GitHubUser) {
-            TODO("Not yet implemented")
+            startActivity(UserDetailActivity.createIntent(this@MainActivity, item.userId))
         }
     })
 

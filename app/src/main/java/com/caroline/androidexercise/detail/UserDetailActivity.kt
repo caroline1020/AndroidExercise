@@ -3,6 +3,7 @@ package com.caroline.androidexercise.detail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.caroline.androidexercise.R
 import com.caroline.androidexercise.databinding.ActivityUserDetailBinding
 import com.caroline.androidexercise.network.utils.HttpResult
 import com.caroline.androidexercise.viewmodel.UserDetailViewModel
+
 
 class UserDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityUserDetailBinding
@@ -53,6 +55,12 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        supportActionBar?.let {
+            it.setDisplayShowTitleEnabled(false)
+            it.elevation = 0f
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeAsUpIndicator(R.drawable.ic_close)
+        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_detail)
         binding.lifecycleOwner = this
 
@@ -67,5 +75,16 @@ class UserDetailActivity : AppCompatActivity() {
             intent.putExtra(KEY_USERNAME, userId)
             return intent
         }
+    }
+
+    @Override
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

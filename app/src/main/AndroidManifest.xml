@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/Theme.DetailTheme"
             android:name=".detail.UserDetailActivity"
             android:launchMode="singleTop" />
     </application>

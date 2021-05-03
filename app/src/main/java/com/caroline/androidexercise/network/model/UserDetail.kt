@@ -1,5 +1,6 @@
 package com.caroline.androidexercise.network.model
 
+import android.view.View
 import com.google.gson.annotations.SerializedName
 
 class UserDetail(
@@ -18,11 +19,17 @@ class UserDetail(
     @SerializedName("bio")
     val bio: String
 ) {
+    fun badgeVisibility(): Int {
+        return if (siteAdmin)
+            View.VISIBLE
+        else
+            View.GONE
+    }
 
     companion object {
 
         fun emptyObject(): UserDetail {
-            return UserDetail("", "", "", true, "", "","")
+            return UserDetail("", "", "", true, "", "", "")
         }
 
     }

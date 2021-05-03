@@ -38,24 +38,28 @@
             android:background="@color/divider" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_identity"
-            android:gravity="center_horizontal"
             android:text="@{item.username}" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{item.badgeVisibility()}"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/bg_staff_tag"
+            android:text="@string/staff" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_location"
-            android:gravity="center_horizontal"
             android:text="@{item.location}" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_link"
-            android:gravity="center_horizontal"
             android:text="@{item.blog}" />
     </LinearLayout>
 </layout>

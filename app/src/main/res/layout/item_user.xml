@@ -26,8 +26,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center_vertical"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icon"
@@ -36,17 +36,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                tools:text="username"
-                android:text="@{item.userId}" />
+                android:layout_marginStart="10dp"
+                android:text="@{item.userId}"
+                tools:text="username" />
 
             <TextView
+                style="@style/StaffTagText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_staff_tag"
-                android:visibility="@{item.badgeVisibility()}"
-                android:layout_marginLeft="10dp"
-                android:text="@string/staff" />
+                android:layout_marginStart="10dp"
+                android:visibility="@{item.badgeVisibility()}" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

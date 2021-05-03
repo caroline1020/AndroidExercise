@@ -14,8 +14,16 @@ class UserDetail(
     @SerializedName("location")
     val location: String,
     @SerializedName("blog")
-    val blog: String
+    val blog: String,
+    @SerializedName("bio")
+    val bio: String
 ) {
 
+    companion object {
 
+        fun emptyObject(): UserDetail {
+            return UserDetail("", "", "", true, "", "","")
+        }
+
+    }
 }

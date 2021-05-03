@@ -1,12 +1,14 @@
 package com.caroline.androidexercise.network
 
 import com.caroline.androidexercise.network.model.GitHubUser
+import com.caroline.androidexercise.network.model.UserDetail
 import com.caroline.androidexercise.network.utils.OkHttpUtil
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 
 
 /**
@@ -24,6 +26,10 @@ interface APIService {
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("users")
     suspend fun getUsers(): Response<ArrayList<GitHubUser>>
+
+    @Headers("Accept: application/vnd.github.v3+json")
+    @GET("users/{username}")
+    suspend fun getUserDetail(@Path("username") username: String): Response<UserDetail>
 }
 
 object GitHubApi {

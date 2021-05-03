@@ -2,6 +2,7 @@ package com.caroline.androidexercise.repository
 
 import com.caroline.androidexercise.network.GitHubApi
 import com.caroline.androidexercise.network.model.GitHubUser
+import com.caroline.androidexercise.network.model.UserDetail
 import com.caroline.androidexercise.network.utils.HttpResult
 
 /**
@@ -12,10 +13,10 @@ class GitHubRepo {
 
         return try {
             val response = GitHubApi.service.getUsers()
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 val result = response.body() ?: ArrayList()
                 HttpResult.Success(result)
-            }else{
+            } else {
                 HttpResult.Error(response.errorBody().toString())
             }
         } catch (e: Throwable) {
@@ -24,4 +25,19 @@ class GitHubRepo {
 
     }
 
+    suspend fun getUserDetail(username: String): HttpResult<UserDetail> {
+
+        return try {
+            val response = GitHubApi.service.getUserDetail(username)
+            if (response.isSuccessful) {
+                val result = response.body() ?: UserDetail.emptyObject()
+                HttpResult.Success(result)
+            } else {
+                HttpResult.Error(response.errorBody().toString())
+            }
+        } catch (e: Throwable) {
+            HttpResult.httpError(e)
+        }
+
+    }
 }

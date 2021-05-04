@@ -6,14 +6,15 @@
     <data>
 
         <variable
-            name="item"
-            type="com.caroline.androidexercise.network.model.UserDetail" />
+            name="viewModel"
+            type="com.caroline.androidexercise.viewmodel.UserDetailViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/container"
         android:orientation="vertical">
 
         <ImageView
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
-            android:text="@{item.name}"
+            android:text="@{viewModel.userDetail.name}"
             android:textColor="@color/name"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/avatar" />
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
-            android:text="@{item.bio}"
+            android:text="@{viewModel.userDetail.bio}"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
         <View
@@ -75,14 +76,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.username}"
+                android:text="@{viewModel.userDetail.username}"
                 tool:text="username" />
 
             <TextView
-                android:theme="@style/StaffTagText"
+                android:id="@+id/badgeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{item.badgeVisibility()}" />
+                android:theme="@style/StaffTagText"
+                android:visibility="@{viewModel.badgeVisibility}" />
         </LinearLayout>
 
         <ImageView
@@ -97,7 +99,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{item.location}"
+            android:text="@{viewModel.userDetail.location}"
             app:layout_constraintBottom_toBottomOf="@id/icLocation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icLocation"
@@ -116,7 +118,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:autoLink="web"
-            android:text="@{item.blog}"
+            android:text="@{viewModel.userDetail.blog}"
             app:layout_constraintBottom_toBottomOf="@id/icLink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icLink"

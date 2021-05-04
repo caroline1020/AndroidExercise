@@ -1,10 +1,7 @@
 package com.caroline.androidexercise.viewmodel
 
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.caroline.androidexercise.network.model.UserDetail
 import com.caroline.androidexercise.network.utils.HttpResult
 import com.caroline.androidexercise.repository.GitHubRepo
@@ -13,6 +10,7 @@ import kotlinx.coroutines.launch
 class UserDetailViewModel : ViewModel() {
 
     val result: MutableLiveData<HttpResult<UserDetail>> = MutableLiveData()
+    val userDetail: MutableLiveData<UserDetail> = MutableLiveData()
     private val _loading = MutableLiveData<Int>()
     val loading: LiveData<Int>
         get() = _loading
@@ -22,12 +20,23 @@ class UserDetailViewModel : ViewModel() {
         _loading.value = View.GONE
     }
 
+    val badgeVisibility: LiveData<Int> = Transformations.map(userDetail) {
+        if (it.siteAdmin) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
 
     fun getUserDetail(username: String) {
         if (_loading.value == View.GONE) {
             viewModelScope.launch {
                 _loading.value = View.VISIBLE
-                result.value = repo.getUserDetail(username)
+                val httpResult = repo.getUserDetail(username)
+                result.value = httpResult
+                if (httpResult is HttpResult.Success) {
+                    userDetail.value = httpResult.data
+                }
                 _loading.value = View.GONE
             }
         }

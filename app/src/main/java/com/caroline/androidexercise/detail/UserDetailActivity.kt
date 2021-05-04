@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -35,9 +36,8 @@ class UserDetailActivity : AppCompatActivity() {
         viewModel.result.observe(this, Observer {
             when (it) {
                 is HttpResult.Success -> {
+                    binding.container.visibility = View.VISIBLE
                     it.data.apply {
-                        binding.item = this
-                        binding.executePendingBindings()
                         Glide.with(binding.avatar).load(avatarUrl)
                             .circleCrop()
                             .into(binding.avatar)
@@ -63,6 +63,8 @@ class UserDetailActivity : AppCompatActivity() {
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_detail)
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.container.visibility = View.GONE
 
     }
 

@@ -17,7 +17,7 @@ import com.caroline.androidexercise.widgets.LoadMoreRecyclerViewAdapter
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     val viewModel: UserListViewModel by lazy {
         ViewModelProvider(this).get(UserListViewModel::class.java)
     }
@@ -36,10 +36,10 @@ class MainActivity : AppCompatActivity() {
                     val hasMoreData = it.data.size == UserListViewModel.PAGE_SIZE
                     usersAdapter.onLoadMoreEnd(it.data, hasMoreData)
                 }
-                is HttpResult.apiError -> {
+                is HttpResult.ApiError -> {
                     Toast.makeText(this, it.apiError, Toast.LENGTH_SHORT).show()
                 }
-                is HttpResult.httpError -> {
+                is HttpResult.HttpError -> {
                     Toast.makeText(this, it.exception.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             }

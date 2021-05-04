@@ -14,8 +14,6 @@ class UserListViewModel : ViewModel() {
 
     val result: MutableLiveData<HttpResult<ArrayList<GitHubUser>>> = MutableLiveData()
     private val _loading = MutableLiveData<Int>()
-    val loading: LiveData<Int>
-        get() = _loading
     private val repo = GitHubRepo()
 
     init {

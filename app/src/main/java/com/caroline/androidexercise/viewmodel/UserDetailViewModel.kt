@@ -12,8 +12,6 @@ class UserDetailViewModel : ViewModel() {
     val result: MutableLiveData<HttpResult<UserDetail>> = MutableLiveData()
     val userDetail: MutableLiveData<UserDetail> = MutableLiveData()
     private val _loading = MutableLiveData<Int>()
-    val loading: LiveData<Int>
-        get() = _loading
     private val repo = GitHubRepo()
 
     init {

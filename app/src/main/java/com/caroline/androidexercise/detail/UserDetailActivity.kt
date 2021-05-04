@@ -44,10 +44,10 @@ class UserDetailActivity : AppCompatActivity() {
                             .into(binding.avatar)
                     }
                 }
-                is HttpResult.apiError -> {
+                is HttpResult.ApiError -> {
                     Toast.makeText(this, it.apiError, Toast.LENGTH_SHORT).show()
                 }
-                is HttpResult.httpError -> {
+                is HttpResult.HttpError -> {
                     Toast.makeText(this, it.exception.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             }

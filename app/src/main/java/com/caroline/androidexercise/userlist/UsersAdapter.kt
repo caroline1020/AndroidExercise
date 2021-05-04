@@ -51,7 +51,7 @@ class ViewHolder private constructor(private val binding: ItemUserBinding) :
     fun bind(item: GitHubUser, listener: OnItemClickListener) {
         binding.item = item
         binding.executePendingBindings()
-        itemView.setOnClickListener { _ ->
+        itemView.setOnClickListener {
             listener.onItemClick(item)
         }
 
@@ -70,7 +70,7 @@ class ViewHolder private constructor(private val binding: ItemUserBinding) :
 
 }
 
-class LoadMoreViewHolder private constructor(private val binding: ItemLoadMoreBinding) :
+class LoadMoreViewHolder private constructor(binding: ItemLoadMoreBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     companion object {

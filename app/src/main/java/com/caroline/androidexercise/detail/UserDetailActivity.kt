@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -43,11 +44,11 @@ class UserDetailActivity : AppCompatActivity() {
                             .into(binding.avatar)
                     }
                 }
-                is HttpResult.Error -> {
-
+                is HttpResult.apiError -> {
+                    Toast.makeText(this, it.apiError, Toast.LENGTH_SHORT).show()
                 }
                 is HttpResult.httpError -> {
-
+                    Toast.makeText(this, it.exception.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         })

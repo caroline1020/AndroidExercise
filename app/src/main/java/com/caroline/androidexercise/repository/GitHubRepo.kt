@@ -17,7 +17,7 @@ class GitHubRepo {
                 val result = response.body() ?: ArrayList()
                 HttpResult.Success(result)
             } else {
-                HttpResult.Error(response.errorBody().toString())
+                HttpResult.apiError(response.errorBody().toString())
             }
         } catch (e: Throwable) {
             HttpResult.httpError(e)
@@ -33,7 +33,7 @@ class GitHubRepo {
                 val result = response.body() ?: UserDetail.emptyObject()
                 HttpResult.Success(result)
             } else {
-                HttpResult.Error(response.errorBody().toString())
+                HttpResult.apiError(response.errorBody().toString())
             }
         } catch (e: Throwable) {
             HttpResult.httpError(e)

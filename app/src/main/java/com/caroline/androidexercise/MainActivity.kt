@@ -1,6 +1,7 @@
 package com.caroline.androidexercise
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -35,9 +36,11 @@ class MainActivity : AppCompatActivity() {
                     val hasMoreData = it.data.size == UserListViewModel.PAGE_SIZE
                     usersAdapter.onLoadMoreEnd(it.data, hasMoreData)
                 }
-                is HttpResult.Error -> {
+                is HttpResult.apiError -> {
+                    Toast.makeText(this, it.apiError, Toast.LENGTH_SHORT).show()
                 }
                 is HttpResult.httpError -> {
+                    Toast.makeText(this, it.exception.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         })

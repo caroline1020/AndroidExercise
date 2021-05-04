@@ -5,11 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 class GitHubUser(
     @SerializedName("login")
-    val userId: String,
+    val username: String,
     @SerializedName("avatar_url")
     val avatarUrl: String,
     @SerializedName("site_admin")
-    val staff: Boolean
+    val staff: Boolean,
+    @SerializedName("id")
+    val id: Int
 ) {
 
     fun badgeVisibility(): Int {

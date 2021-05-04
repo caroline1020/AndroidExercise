@@ -12,6 +12,8 @@ import com.caroline.androidexercise.network.utils.HttpResult
 import com.caroline.androidexercise.userlist.OnItemClickListener
 import com.caroline.androidexercise.userlist.UsersAdapter
 import com.caroline.androidexercise.viewmodel.UserListViewModel
+import com.caroline.androidexercise.widgets.LoadMoreRecyclerViewAdapter
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -30,27 +32,36 @@ class MainActivity : AppCompatActivity() {
         viewModel.result.observe(this, Observer {
             when (it) {
                 is HttpResult.Success -> {
-                    adapter.setData(it.data)
+                    val hasMoreData = it.data.size == UserListViewModel.PAGE_SIZE
+                    usersAdapter.onLoadMoreEnd(it.data, hasMoreData)
                 }
                 is HttpResult.Error -> {
-
                 }
                 is HttpResult.httpError -> {
-
                 }
             }
         })
     }
 
-    private val adapter = UsersAdapter(object : OnItemClickListener {
+    fun getLastId(): Int {
+        return usersAdapter.getLastId()
+    }
+
+    private val usersAdapter = UsersAdapter(object : OnItemClickListener {
         override fun onItemClick(item: GitHubUser) {
-            startActivity(UserDetailActivity.createIntent(this@MainActivity, item.userId))
+            startActivity(UserDetailActivity.createIntent(this@MainActivity, item.username))
         }
+    }, object : LoadMoreRecyclerViewAdapter.OnLoadMoreListener {
+        override fun onLoadMore() {
+            viewModel.getUserList(getLastId())
+        }
+
     })
 
     private fun initView() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.adapter = usersAdapter
+
     }
 }

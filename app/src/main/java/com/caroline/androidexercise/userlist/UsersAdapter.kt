@@ -4,32 +4,39 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.caroline.androidexercise.databinding.ItemLoadMoreBinding
 import com.caroline.androidexercise.databinding.ItemUserBinding
 import com.caroline.androidexercise.network.model.GitHubUser
+import com.caroline.androidexercise.widgets.LoadMoreRecyclerViewAdapter
 
-class UsersAdapter(private val onClickListener: OnItemClickListener) :
-    RecyclerView.Adapter<ViewHolder>() {
-    private val list: ArrayList<GitHubUser> = ArrayList()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
-    }
-
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], onClickListener)
-    }
-
-    fun setData(newList: ArrayList<GitHubUser>?) {
-        list.clear()
-        if (newList == null) {
-            notifyDataSetChanged()
-            return
+class UsersAdapter(
+    private val onClickListener: OnItemClickListener,
+    onLoadMoreListener: OnLoadMoreListener
+) :
+    LoadMoreRecyclerViewAdapter<GitHubUser>(onLoadMoreListener) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_LOADMORE -> {
+                LoadMoreViewHolder.from(parent)
+            }
+            else -> ViewHolder.from(parent)
         }
-        list.addAll(newList)
-        notifyDataSetChanged()
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        if (holder is ViewHolder) {
+            holder.bind(getData()[position], onClickListener)
+        }
+    }
+
+
+    fun getLastId(): Int {
+        if (getData().isEmpty()) {
+            return 0
+        }
+        return getData().last().id
     }
 }
 
@@ -58,6 +65,19 @@ class ViewHolder private constructor(private val binding: ItemUserBinding) :
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = ItemUserBinding.inflate(layoutInflater, parent, false)
             return ViewHolder(view)
+        }
+    }
+
+}
+
+class LoadMoreViewHolder private constructor(private val binding: ItemLoadMoreBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    companion object {
+        fun from(parent: ViewGroup): LoadMoreViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = ItemLoadMoreBinding.inflate(layoutInflater, parent, false)
+            return LoadMoreViewHolder(view)
         }
     }
 

@@ -9,10 +9,10 @@ import com.caroline.androidexercise.network.utils.HttpResult
  * Created by nini on 2021/5/3.
  */
 class GitHubRepo {
-    suspend fun getUsers(): HttpResult<ArrayList<GitHubUser>> {
+    suspend fun getUsers(since: Int, pageSize: Int): HttpResult<ArrayList<GitHubUser>> {
 
         return try {
-            val response = GitHubApi.service.getUsers()
+            val response = GitHubApi.service.getUsers(since, pageSize.toString())
             if (response.isSuccessful) {
                 val result = response.body() ?: ArrayList()
                 HttpResult.Success(result)

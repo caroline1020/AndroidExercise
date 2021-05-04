@@ -20,19 +20,22 @@ class UserListViewModel : ViewModel() {
 
     init {
         _loading.value = View.GONE
-        getUserList()
     }
 
-
-    private fun getUserList() {
+    fun getUserList(since: Int) {
         if (_loading.value == View.GONE) {
             viewModelScope.launch {
                 _loading.value = View.VISIBLE
-                result.value = repo.getUsers()
+                val users = repo.getUsers(since, PAGE_SIZE)
+                result.value = users
                 _loading.value = View.GONE
 
             }
         }
+    }
+
+    companion object {
+        const val PAGE_SIZE = 20
     }
 
 

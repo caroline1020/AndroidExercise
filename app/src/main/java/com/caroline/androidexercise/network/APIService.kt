@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.Url
 
 
 /**
@@ -25,11 +25,8 @@ private val retrofit = Retrofit.Builder()
 interface APIService {
 
     @Headers("Accept: application/vnd.github.v3+json")
-    @GET("users")
-    suspend fun getUsers(
-        @Query("since") since: Int,
-        @Query("per_page") per_page: String
-    ): Response<ArrayList<GitHubUser>>
+    @GET
+    suspend fun getUsers(@Url url: String): Response<ArrayList<GitHubUser>>
 
     @Headers("Accept: application/vnd.github.v3+json")
     @GET("users/{username}")

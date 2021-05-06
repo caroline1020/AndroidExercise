@@ -4,18 +4,19 @@ import com.caroline.androidexercise.network.GitHubApi
 import com.caroline.androidexercise.network.model.GitHubUser
 import com.caroline.androidexercise.network.model.UserDetail
 import com.caroline.androidexercise.network.utils.HttpResult
+import retrofit2.Response
 
 /**
  * Created by nini on 2021/5/3.
  */
 class GitHubRepo {
-    suspend fun getUsers(since: Int, pageSize: Int): HttpResult<ArrayList<GitHubUser>> {
+
+    suspend fun getUsers(url: String): HttpResult<Response<ArrayList<GitHubUser>>> {
 
         return try {
-            val response = GitHubApi.service.getUsers(since, pageSize.toString())
+            val response = GitHubApi.service.getUsers(url)
             if (response.isSuccessful) {
-                val result = response.body() ?: ArrayList()
-                HttpResult.Success(result)
+                HttpResult.Success(response)
             } else {
                 HttpResult.ApiError(response.errorBody().toString())
             }
@@ -25,13 +26,13 @@ class GitHubRepo {
 
     }
 
-    suspend fun getUserDetail(username: String): HttpResult<UserDetail> {
+    suspend fun getUserDetail(username: String): HttpResult<Response<UserDetail>> {
 
         return try {
             val response = GitHubApi.service.getUserDetail(username)
             if (response.isSuccessful) {
                 val result = response.body() ?: UserDetail.emptyObject()
-                HttpResult.Success(result)
+                HttpResult.Success(response)
             } else {
                 HttpResult.ApiError(response.errorBody().toString())
             }
@@ -40,4 +41,6 @@ class GitHubRepo {
         }
 
     }
+
+
 }

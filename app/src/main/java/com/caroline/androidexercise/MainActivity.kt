@@ -33,8 +33,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.result.observe(this, Observer {
             when (it) {
                 is HttpResult.Success -> {
-                    val hasMoreData = it.data.size == UserListViewModel.PAGE_SIZE
-                    usersAdapter.onLoadMoreEnd(it.data, hasMoreData)
+                    it.data.body()?.let { list ->
+                        val hasMoreData = viewModel.hasNextPage()
+                        usersAdapter.onLoadMoreEnd(list, hasMoreData)
+                    }
                 }
                 is HttpResult.ApiError -> {
                     Toast.makeText(this, it.apiError, Toast.LENGTH_SHORT).show()
@@ -46,17 +48,13 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getLastId(): Int {
-        return usersAdapter.getLastId()
-    }
-
     private val usersAdapter = UsersAdapter(object : OnItemClickListener {
         override fun onItemClick(item: GitHubUser) {
             startActivity(UserDetailActivity.createIntent(this@MainActivity, item.username))
         }
     }, object : LoadMoreRecyclerViewAdapter.OnLoadMoreListener {
         override fun onLoadMore() {
-            viewModel.getUserList(getLastId())
+            viewModel.loadMoreUsers()
         }
 
     })

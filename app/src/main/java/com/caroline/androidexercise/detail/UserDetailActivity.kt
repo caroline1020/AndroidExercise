@@ -38,8 +38,8 @@ class UserDetailActivity : AppCompatActivity() {
             when (it) {
                 is HttpResult.Success -> {
                     binding.container.visibility = View.VISIBLE
-                    it.data.apply {
-                        Glide.with(binding.avatar).load(avatarUrl)
+                    it.data.body()?.let { detail ->
+                        Glide.with(binding.avatar).load(detail.avatarUrl)
                             .circleCrop()
                             .into(binding.avatar)
                     }

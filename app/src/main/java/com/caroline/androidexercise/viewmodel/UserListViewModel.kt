@@ -9,7 +9,6 @@ import com.caroline.androidexercise.network.model.GitHubUser
 import com.caroline.androidexercise.network.utils.HttpResult
 import com.caroline.androidexercise.repository.GitHubRepo
 import kotlinx.coroutines.launch
-import okhttp3.Headers
 import retrofit2.Response
 
 class UserListViewModel : ViewModel() {
@@ -30,9 +29,8 @@ class UserListViewModel : ViewModel() {
                 viewModelScope.launch {
                     _loading.value = View.VISIBLE
                     val httpResult = repo.getUsers(url)
-                    if (httpResult is HttpResult.Success) {
-                        nextPageUrl = parseNextPageUrl(httpResult.data.headers())
-                    }
+                    updateNextPageUrl(httpResult)
+
                     result.value = httpResult
                     _loading.value = View.GONE
 
@@ -41,22 +39,23 @@ class UserListViewModel : ViewModel() {
         }
     }
 
-    private fun parseNextPageUrl(headers: Headers): String? {
-        val s = headers["link"]
-        s?.let {
-            val split = it.split(",")
-            split.forEach { links ->
-                if (links.contains("next")) {
-                    val startIndex = links.indexOf("<") + 1
-                    val endIndex = links.indexOf(">")
-                    return links.subSequence(startIndex, endIndex).toString()
-
+    private fun updateNextPageUrl(httpResult: HttpResult<Response<ArrayList<GitHubUser>>>) {
+        if (httpResult is HttpResult.Success) {
+            val headers = httpResult.data.headers()
+            val s = headers["link"]
+            s?.let {
+                val split = it.split(",")
+                split.forEach { links ->
+                    if (links.contains("next")) {
+                        val startIndex = links.indexOf("<") + 1
+                        val endIndex = links.indexOf(">")
+                        nextPageUrl = links.subSequence(startIndex, endIndex).toString()
+                        return
+                    }
                 }
-
             }
         }
-        return null
-
+        return
     }
 
     fun hasNextPage(): Boolean {

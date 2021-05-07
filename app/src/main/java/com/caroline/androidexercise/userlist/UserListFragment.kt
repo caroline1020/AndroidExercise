@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.caroline.androidexercise.R
 import com.caroline.androidexercise.databinding.FragmentUserListBinding
-import com.caroline.androidexercise.detail.UserDetailActivity
+import com.caroline.androidexercise.userdetail.UserDetailActivity
 import com.caroline.androidexercise.network.model.GitHubUser
 import com.caroline.androidexercise.network.utils.HttpResult
 import com.caroline.androidexercise.viewmodel.UserListViewModel

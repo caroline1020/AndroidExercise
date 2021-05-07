@@ -1,5 +1,6 @@
 package com.caroline.androidexercise.viewmodel
 
+import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.*
 import com.caroline.androidexercise.network.model.UserDetail
@@ -10,6 +11,7 @@ import retrofit2.Response
 
 class UserDetailViewModel : ViewModel() {
 
+    private lateinit var username: String
     val result: MutableLiveData<HttpResult<Response<UserDetail>>> = MutableLiveData()
     val userDetail: MutableLiveData<UserDetail> = MutableLiveData()
     private val _loading = MutableLiveData<Int>()
@@ -29,7 +31,10 @@ class UserDetailViewModel : ViewModel() {
         }
     }
 
-    fun getUserDetail(username: String) {
+    fun getUserDetail() {
+        if (TextUtils.isEmpty(username)) {
+            return
+        }
         if (_loading.value == View.GONE) {
             viewModelScope.launch {
                 _loading.value = View.VISIBLE
@@ -41,6 +46,10 @@ class UserDetailViewModel : ViewModel() {
                 _loading.value = View.GONE
             }
         }
+    }
+
+    fun setUsername(username: String) {
+        this.username = username
     }
 
 

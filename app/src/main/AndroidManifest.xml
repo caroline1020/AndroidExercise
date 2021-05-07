@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:theme="@style/Theme.DetailTheme"
-            android:name=".detail.UserDetailActivity"
+            android:name=".userdetail.UserDetailActivity"
             android:launchMode="singleTop" />
     </application>
 

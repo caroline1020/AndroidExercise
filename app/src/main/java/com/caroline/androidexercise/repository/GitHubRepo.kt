@@ -31,7 +31,7 @@ class GitHubRepo {
         return try {
             val response = GitHubApi.service.getUserDetail(username)
             if (response.isSuccessful) {
-                val result = response.body() ?: UserDetail.emptyObject()
+                response.body() ?: UserDetail.emptyObject()
                 HttpResult.Success(response)
             } else {
                 HttpResult.ApiError(response.errorBody().toString())

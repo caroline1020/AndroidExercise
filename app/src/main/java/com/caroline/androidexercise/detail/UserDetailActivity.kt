@@ -25,15 +25,23 @@ class UserDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initView()
+        registerObservers()
+        tryLoadUserDetail()
+    }
+
+    private fun tryLoadUserDetail() {
         val username = intent.getStringExtra(KEY_USERNAME)
         username?.let {
             viewModel.getUserDetail(username)
         }
-        initView()
-        registerObservers()
     }
 
     private fun registerObservers() {
+        viewModel.loading.observe(this, Observer {
+            binding.swipeRefreshLayout.isRefreshing = it == View.VISIBLE
+        })
+
         viewModel.result.observe(this, Observer {
             when (it) {
                 is HttpResult.Success -> {
@@ -66,6 +74,9 @@ class UserDetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.container.visibility = View.GONE
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            tryLoadUserDetail()
+        }
 
     }
 

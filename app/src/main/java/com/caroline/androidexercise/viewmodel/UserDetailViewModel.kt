@@ -13,6 +13,8 @@ class UserDetailViewModel : ViewModel() {
     val result: MutableLiveData<HttpResult<Response<UserDetail>>> = MutableLiveData()
     val userDetail: MutableLiveData<UserDetail> = MutableLiveData()
     private val _loading = MutableLiveData<Int>()
+    val loading: LiveData<Int>
+        get() = _loading
     private val repo = GitHubRepo()
 
     init {

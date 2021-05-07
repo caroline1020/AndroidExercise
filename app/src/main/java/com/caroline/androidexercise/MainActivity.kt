@@ -1,6 +1,7 @@
 package com.caroline.androidexercise
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+        viewModel.loading.observe(this, Observer {
+            binding.swipeRefreshLayout.isRefreshing = it == View.VISIBLE
+        })
     }
 
     private val usersAdapter = UsersAdapter(object : OnItemClickListener {
@@ -63,6 +67,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.recyclerView.adapter = usersAdapter
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            viewModel.reset()
+            usersAdapter.reset()
+        }
 
     }
 }

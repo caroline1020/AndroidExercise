@@ -2,6 +2,7 @@ package com.caroline.androidexercise.viewmodel
 
 import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +17,9 @@ class UserListViewModel : ViewModel() {
 
     private var nextPageUrl: String? = FIRST_PAGE_URL
     val result: MutableLiveData<HttpResult<Response<ArrayList<GitHubUser>>>> = MutableLiveData()
-    private val _loading = MutableLiveData<Int>()
+    val _loading = MutableLiveData<Int>()
+    val loading: LiveData<Int>
+        get() = _loading
     private val repo = GitHubRepo()
 
     init {
@@ -60,6 +63,10 @@ class UserListViewModel : ViewModel() {
 
     fun hasNextPage(): Boolean {
         return !TextUtils.isEmpty(nextPageUrl)
+    }
+
+    fun reset() {
+        nextPageUrl = FIRST_PAGE_URL
     }
 
     companion object {

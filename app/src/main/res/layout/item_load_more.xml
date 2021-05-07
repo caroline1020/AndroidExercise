@@ -10,15 +10,6 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content">
-
-        <ProgressBar
-            android:layout_gravity="center"
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.ProgressBar.Small"
-            android:layout_width="wrap_content"
-            android:foregroundGravity="center_horizontal"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+        android:layout_height="@dimen/item_height"
+        android:layout_gravity="center" />
 </layout>

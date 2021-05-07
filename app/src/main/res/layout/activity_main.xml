@@ -19,15 +19,21 @@
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layoutAnimation="@anim/layout_animation_fade_in"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/swipeRefreshLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleText" />
+            app:layout_constraintTop_toBottomOf="@id/titleText">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layoutAnimation="@anim/layout_animation_fade_in"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
